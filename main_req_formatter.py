@@ -79,4 +79,4 @@ class MainRequirementsFormatter:
             MainRequirementsFormatter.change_line_spacing(WD_LINE_SPACING.ONE_POINT_FIVE, paragraph)
             MainRequirementsFormatter.change_left_paragraph_indentation(1.25, paragraph)
         MainRequirementsFormatter.number_pages(doc, doc.sections[0].footer.paragraphs[0].add_run())
-        MainRequirementsFormatter.change_margins(0.3, 0.15, 0.2, 0.2, doc)
+        MainRequirementsFormatter.change_margins(3, 1.5, 2, 2, doc)
