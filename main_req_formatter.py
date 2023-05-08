@@ -74,7 +74,7 @@ class MainRequirementsFormatter:
         for paragraph in doc.paragraphs:
             MainRequirementsFormatter.change_font('Times New Roman', paragraph)
             MainRequirementsFormatter.change_font_size(14, paragraph)
-            MainRequirementsFormatter.change_alignment(WD_PARAGRAPH_ALIGNMENT.CENTER, paragraph)
+            MainRequirementsFormatter.change_alignment(WD_PARAGRAPH_ALIGNMENT.JUSTIFY, paragraph)
             MainRequirementsFormatter.change_font_color(RGBColor(0, 0, 0), paragraph)
             MainRequirementsFormatter.change_line_spacing(WD_LINE_SPACING.ONE_POINT_FIVE, paragraph)
             MainRequirementsFormatter.change_left_paragraph_indentation(1.25, paragraph)
