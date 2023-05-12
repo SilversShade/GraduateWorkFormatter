@@ -1,3 +1,5 @@
+import re
+
 from docx import Document
 from docx.oxml import OxmlElement, ns
 from docx.shared import Pt
@@ -11,9 +13,10 @@ class MainRequirementsFormatter:
 
     @staticmethod
     def number_pages(doc, run):
-        for p in doc.sections[0].footer.paragraphs:
-            for r in p.runs:
-                r.clear()
+        for section in doc.sections:
+            footer = section.footer
+            for p in footer.paragraphs:
+                p.text = ""
 
         doc.sections[0].footer.paragraphs[0].alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
         doc.sections[0].different_first_page_header_footer = True
@@ -45,10 +48,6 @@ class MainRequirementsFormatter:
         font.size = Pt(font_size)
 
     @staticmethod
-    def change_alignment(alignment: WD_PARAGRAPH_ALIGNMENT, paragraph):
-        paragraph.alignment = alignment
-
-    @staticmethod
     def change_font_color(color: RGBColor, paragraph):
         for run in paragraph.runs:
             run.font.color.rgb = color
@@ -70,11 +69,20 @@ class MainRequirementsFormatter:
         paragraph.paragraph_format.left_indent = Cm(indentation_cm)
 
     @staticmethod
+    def change_title_page_year(doc: Document, year: str):
+        regex = re.compile(r"20[0-9][0-9]")
+
+        for p in doc.paragraphs:
+            for r in p.runs:
+                if regex.search(r.text):
+                    r.text = f'\n{year}'
+                    return
+
+    @staticmethod
     def format_document(doc: Document):
         for paragraph in doc.paragraphs:
             MainRequirementsFormatter.change_font('Times New Roman', paragraph)
             MainRequirementsFormatter.change_font_size(14, paragraph)
-            MainRequirementsFormatter.change_alignment(WD_PARAGRAPH_ALIGNMENT.JUSTIFY, paragraph)
             MainRequirementsFormatter.change_font_color(RGBColor(0, 0, 0), paragraph)
             MainRequirementsFormatter.change_line_spacing(WD_LINE_SPACING.ONE_POINT_FIVE, paragraph)
             MainRequirementsFormatter.change_left_paragraph_indentation(1.25, paragraph)
