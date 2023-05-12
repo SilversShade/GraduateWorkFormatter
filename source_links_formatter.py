@@ -7,12 +7,12 @@ class SourceLinksFormatter:
 
     @staticmethod
     def get_number_of_ref_subscripts(doc: Document) -> int:
-        count = 0
+        counter = 0
         for p in doc.paragraphs:
             for r in p.runs:
                 if r.font.superscript and re.match(r"\[[0-9]+]", r.text):
-                    count += 1
-        return count
+                    counter += 1
+        return counter
 
     @staticmethod
     def get_numbered_list_id(paragraph):
@@ -41,4 +41,4 @@ class SourceLinksFormatter:
         source_links_number = SourceLinksFormatter.get_number_of_source_links(doc, 'список источников и литературы')
         if ref_subscripts_number != source_links_number:
             print('Количество выделенных ссылок не соответствует количеству источников литературы.'
-                  ' Список источников должен быть одним.')
+                  ' Возможно Ваш список источников не является цельным списком.')
