@@ -38,15 +38,14 @@ class MainRequirementsFormatter:
 
     @staticmethod
     def change_font(font_name: str, paragraph):
-        style = paragraph.style
-        font = style.font
-        font.name = font_name
+        for run in paragraph.runs:
+            run.font.name = font_name
 
     @staticmethod
     def change_font_size(font_size: int, paragraph):
-        style = paragraph.style
-        font = style.font
-        font.size = Pt(font_size)
+        for run in paragraph.runs:
+            run.font.size = Pt(font_size)
+
 
     @staticmethod
     def change_font_color(color: RGBColor, paragraph):
