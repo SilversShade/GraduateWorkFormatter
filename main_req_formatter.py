@@ -14,12 +14,11 @@ class MainRequirementsFormatter:
     @staticmethod
     def number_pages(doc, run):
         for section in doc.sections:
+            section.different_first_page_header_footer = True
             footer = section.footer
             for p in footer.paragraphs:
+                p.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
                 p.text = ""
-
-        doc.sections[0].footer.paragraphs[0].alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-        doc.sections[0].different_first_page_header_footer = True
 
         fldChar1 = OxmlElement('w:fldChar')
         fldChar1.set(ns.qn('w:fldCharType'), 'begin')

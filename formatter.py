@@ -5,7 +5,7 @@ from source_links_formatter import SourceLinksFormatter
 
 
 def main():
-    doc = Document("work.docx")
+    doc = Document("Диплом.docx")
     MainRequirementsFormatter.format_document(doc)
     MainRequirementsFormatter.change_title_page_year(doc, '2023')
     SourceLinksFormatter.check_for_links_presence(doc)
