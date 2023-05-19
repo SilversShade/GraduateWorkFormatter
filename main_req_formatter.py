@@ -12,27 +12,29 @@ from docx.shared import Cm
 class MainRequirementsFormatter:
 
     @staticmethod
-    def number_pages(doc, run):
+    def number_pages(doc):
         for section in doc.sections:
-            section.different_first_page_header_footer = True
-            footer = section.footer
-            for p in footer.paragraphs:
-                p.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-                p.text = ""
+            section.footer.is_linked_to_previous = True
 
-        fldChar1 = OxmlElement('w:fldChar')
-        fldChar1.set(ns.qn('w:fldCharType'), 'begin')
+        new_paragraph = doc.sections[0].footer.add_paragraph()
+        new_run = new_paragraph.add_run()
 
-        instrText = OxmlElement('w:instrText')
-        instrText.set(ns.qn('xml:space'), 'preserve')
-        instrText.text = "PAGE"
+        new_paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+        doc.sections[0].different_first_page_header_footer = True
 
-        fldChar2 = OxmlElement('w:fldChar')
-        fldChar2.set(ns.qn('w:fldCharType'), 'end')
+        fld_char1 = OxmlElement('w:fldChar')
+        fld_char1.set(ns.qn('w:fldCharType'), 'begin')
 
-        run._r.append(fldChar1)
-        run._r.append(instrText)
-        run._r.append(fldChar2)
+        instr_text = OxmlElement('w:instrText')
+        instr_text.set(ns.qn('xml:space'), 'preserve')
+        instr_text.text = "PAGE"
+
+        fld_char2 = OxmlElement('w:fldChar')
+        fld_char2.set(ns.qn('w:fldCharType'), 'end')
+
+        new_run._r.append(fld_char1)
+        new_run._r.append(instr_text)
+        new_run._r.append(fld_char2)
 
     @staticmethod
     def change_font(font_name: str, paragraph):
@@ -85,5 +87,5 @@ class MainRequirementsFormatter:
             MainRequirementsFormatter.change_font_color(RGBColor(0, 0, 0), paragraph)
             MainRequirementsFormatter.change_line_spacing(WD_LINE_SPACING.ONE_POINT_FIVE, paragraph)
             MainRequirementsFormatter.change_left_paragraph_indentation(1.25, paragraph)
-        MainRequirementsFormatter.number_pages(doc, doc.sections[0].footer.paragraphs[0].add_run())
+        MainRequirementsFormatter.number_pages(doc)
         MainRequirementsFormatter.change_margins(3, 1.5, 2, 2, doc)
