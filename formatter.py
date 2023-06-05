@@ -8,7 +8,7 @@ import argparse
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('path_to_docx', type=str, required=True, help='Path to docx file')
+    parser.add_argument('path_to_docx', type=str, help='Path to docx file')
     args = parser.parse_args()
 
     if not path.exists(args.path_to_docx) or not path.isfile(args.path_to_docx):
